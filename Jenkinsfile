@@ -15,9 +15,9 @@ pipeline {
             steps {
                 // Build the Docker image using the Dockerfile from the repository
                 script {
-                    def dockerImage = docker.build("my_web_app_image:${env.BUILD_ID}", "-f Dockerfile .")
+                    def dockerImage = docker.build("my_app:${env.BUILD_ID}", "-f Dockerfile .")
                     // Save the dockerImage variable as an environment variable for later use
-                    env.IMAGE_NAME = "my_web_app_image:${env.BUILD_ID}"
+                    env.IMAGE_NAME = "my_app:${env.BUILD_ID}"
                 }
             }
         }
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 // Run the Docker container from the built image with port 8000 mapped to the host
                 script {
-                    sh "docker run -p 8000:80 -d --name my_web_app_container ${env.IMAGE_NAME}"
+                    sh "docker run -p 8000:80 -d --name my_app ${env.IMAGE_NAME}"
                 }
             }
         }
